@@ -23,7 +23,7 @@ def part1(data):
     return int(fuel)
 
 
-def part2(data):
+def part2(data): # Very janky, not sure if it works in all situations
     targetA = int(avg(data))
     targetB = int(avg(data))+1
     fuelA = 0
