@@ -38,16 +38,17 @@ func main() {
 	if err := scanner.Err(); err != nil {
 		fmt.Println(err)
 	}
-	out := 0
+	totalSize := root.GetSize()
+	best := totalSize
 	for _, dir := range root.GetChildDirs() {
 		size := dir.GetSize()
 
-		if size <= 100000 && dir.IsDir() {
-			fmt.Println(dir)
-			out += size
+		if size < best && totalSize-size <= 40000000 && dir.IsDir() {
+			fmt.Println(dir, totalSize-size, best)
+			best = size
 		}
 	}
-	fmt.Println(out)
+	fmt.Println("!!!", best)
 
 }
 func processChild(text string) {
