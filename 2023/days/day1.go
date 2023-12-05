@@ -1,22 +1,16 @@
-package main
+package days
 
 import (
 	"bufio"
 	"fmt"
 	"log"
-	"os"
 	"strconv"
 )
 
-func main() {
-	file, err := os.Open("input.txt")
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
+type Day1 struct{}
 
+func (_ Day1) Part2(scanner *bufio.Scanner) {
 	sum := 0
-	scanner := bufio.NewScanner(file)
 	findNext := func(arr []byte) int {
 		if len(arr) >= 3 {
 			strToCheck := string(arr[:3])
