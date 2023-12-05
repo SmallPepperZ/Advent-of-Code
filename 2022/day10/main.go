@@ -5,6 +5,7 @@ import (
 	"container/list"
 	"fmt"
 	"log"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -71,7 +72,7 @@ func (task Instruction) String() string {
 func main() {
 	register := &Register{value: 1, cycle: 0}
 	file, err := os.Open("input.txt")
-	pixels := make([]bool,40*6)
+	pixels := make([]bool, 40*6)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -84,21 +85,24 @@ func main() {
 	}
 	sum := 0
 	for register.RunCycle(scanner) {
-		if register.cycle > 220 {
-			break
+		if math.Abs(float64(register.value-register.cycle)) <= 1 {
+			pixels[register.cycle-1] = true
 		}
-		if (register.cycle-20)%40 == 0 {
-			fmt.Println(register.cycle, register.value, register.cycle*register.value)
-			sum += register.cycle * register.value
-		}
+
+		fmt.Println(register.cycle, register.value, math.Abs(float64(register.value-register.cycle)))
 	}
-	for row:=0;row<6;row++ {
-		for col:=0;col<40;col++ {
+	for col := 0; col < 40; col++ {
+		fmt.Printf(" %2v ", col)
+	}
+	fmt.Print("\n")
+	fmt.Print("\n")
+	for row := 0; row < 6; row++ {
+		for col := 0; col < 40; col++ {
 			pixel := pixels[row*40+col]
-			if (pixel) {
-				fmt.Print("#")
+			if pixel {
+				fmt.Print(" ## ")
 			} else {
-				fmt.Print(" ")
+				fmt.Print(" __ ")
 			}
 		}
 		fmt.Print("\n")
